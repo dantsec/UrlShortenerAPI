@@ -16,6 +16,7 @@
 /**
  * Redirect to original url.
  */
+
 $router->get('/{hash}', 'UrlManagement\RedirectController');
 
 
@@ -25,6 +26,7 @@ $router->get('/{hash}', 'UrlManagement\RedirectController');
  * Contains routes to create short url
  * And to get url info.
  */
+
 $router->group(['prefix' => 'short'], function () use ($router) {
     $router->post('/', 'UrlManagement\CreateUrlController');
     $router->get('/{hash}', 'UrlManagement\GetUrlInfoController');
