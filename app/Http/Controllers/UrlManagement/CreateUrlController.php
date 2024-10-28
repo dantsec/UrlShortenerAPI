@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\UrlManagement;
 
-
 use App\Models\Url;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
