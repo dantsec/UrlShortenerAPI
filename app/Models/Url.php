@@ -26,4 +26,14 @@ class Url extends Model
         'long_url',
         'created_at'
     ];
+
+    /**
+     * Abstraction to search a item by it hash.
+     *
+     * @param ?string $hash
+     */
+    public static function findByHash(?string $hash): ?self
+    {
+        return self::where('hash', $hash)->first();
+    }
 }
