@@ -24,8 +24,8 @@ class UrlFactory extends Factory
     public function definition()
     {
         return [
-            'hash' => Str::random(10),
-            'long_url' => $this->faker->url(),
+            'hash'       => Str::random(10),
+            'long_url'   => $this->faker->url(),
             'created_at' => Carbon::now()
         ];
     }

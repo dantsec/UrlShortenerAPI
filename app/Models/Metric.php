@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Url extends Model
+class Metric extends Model
 {
     use HasFactory;
 
@@ -23,8 +23,12 @@ class Url extends Model
      * @var string[]
      */
     protected $fillable = [
-        'hash',
-        'long_url',
+        'url_id',
+        'ip_addr',
+        'device_type',
+        'browser_type',
+        'operating_system',
+        'referrer_source',
         'created_at'
     ];
 
@@ -39,12 +43,12 @@ class Url extends Model
     }
 
     /**
-     * Relationship (1...N) with `metrics` table.
+     * Relationship (1...N) with `urls` table.
      *
-     * @return HasMany
+     * @return BelongsTo
      */
-    public function metrics(): HasMany
+    public function url(): BelongsTo
     {
-        return $this->hasMany(Metric::class, 'url_id', 'id');
+        return $this->belongsTo(Url::class);
     }
 }
