@@ -33,16 +33,6 @@ class Metric extends Model
     ];
 
     /**
-     * Abstraction to search a item by it hash.
-     *
-     * @param ?string $hash
-     */
-    public static function findByHash(?string $hash): ?self
-    {
-        return self::where('hash', $hash)->first();
-    }
-
-    /**
      * Relationship (1...N) with `urls` table.
      *
      * @return BelongsTo

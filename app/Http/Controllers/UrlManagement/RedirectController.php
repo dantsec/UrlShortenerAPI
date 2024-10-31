@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\UrlManagement;
 
+use App\Helpers\MetricDataHandler;
 use App\Models\Url;
 use Illuminate\Http\JsonResponse;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
+use App\Models\Metric;
 
 class RedirectController extends Controller
 {
     /**
-     * Redirect user to original url based on saved hash at database.
+     * Redirect user to original url based on saved hash at database and save its metric.
      *
      * @param string $hash
      *
@@ -18,7 +20,9 @@ class RedirectController extends Controller
      */
     public function __invoke(string $hash): JsonResponse
     {
-        $longUrl = Url::findByHash($hash)?->long_url;
+        $url = Url::findByHash($hash);
+
+        $longUrl = $url?->long_url;
 
         if (!isset($longUrl)) {
             return ResponseFormatter::formatResponse(
@@ -27,6 +31,10 @@ class RedirectController extends Controller
                 'URL Not Found',
             );
         }
+
+        $data = MetricDataHandler::metricDataFormatter($url->id, $_SERVER);
+
+        Metric::create($data);
 
         return ResponseFormatter::formatResponse(
             'success',
