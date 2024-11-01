@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Url extends Model
 {
@@ -24,7 +25,8 @@ class Url extends Model
     protected $fillable = [
         'hash',
         'long_url',
-        'created_at'
+        'created_at',
+        'total_clicks'
     ];
 
     /**
@@ -35,5 +37,15 @@ class Url extends Model
     public static function findByHash(?string $hash): ?self
     {
         return self::where('hash', $hash)->first();
+    }
+
+    /**
+     * Relationship (1...N) with `metrics` table.
+     *
+     * @return HasMany
+     */
+    public function metrics(): HasMany
+    {
+        return $this->hasMany(Metric::class, 'url_id', 'id');
     }
 }

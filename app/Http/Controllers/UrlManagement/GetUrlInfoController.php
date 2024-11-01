@@ -18,9 +18,9 @@ class GetUrlInfoController extends Controller
      */
     public function __invoke(string $hash): JsonResponse
     {
-        $info = Url::findByHash($hash);
+        $url = Url::findByHash($hash);
 
-        if (!isset($info)) {
+        if (!isset($url)) {
             return ResponseFormatter::formatResponse(
                 'error',
                 404,
@@ -28,11 +28,17 @@ class GetUrlInfoController extends Controller
             );
         }
 
+        $urlData = $url->toArray();
+        $metrics = $url->metrics->toArray();
+
         return ResponseFormatter::formatResponse(
             'success',
             200,
-            null,
-            $info->toArray()
+            'Data Retrieved Successfully',
+            [
+                'url_data' => $urlData,
+                'metrics' => $metrics
+            ]
         );
     }
 }
