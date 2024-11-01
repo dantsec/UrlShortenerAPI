@@ -12,6 +12,7 @@ class MetricDataHandler
      *
      * @param int $urlId
      * @param array $data
+     * @param int $clicks
      *
      * @return array
      */
@@ -34,7 +35,7 @@ class MetricDataHandler
             'operating_system' => $agent->platform(),
             'referrer_source' => $referrerSource,
             'created_at' => Carbon::now(),
-            'total_clicks' => $clicks,
+            'total_clicks' => $clicks + 1,
             'user_agent' => $agent->getUserAgent()
         ];
     }

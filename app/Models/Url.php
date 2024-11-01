@@ -25,7 +25,8 @@ class Url extends Model
     protected $fillable = [
         'hash',
         'long_url',
-        'created_at'
+        'created_at',
+        'total_clicks'
     ];
 
     /**

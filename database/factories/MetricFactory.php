@@ -34,7 +34,6 @@ class MetricFactory extends Factory
             'operating_system' => $agent->platform(),
             'referrer_source'  => $this->faker->randomElement([$this->faker->url(), 'Direct']),
             'created_at'       => $this->faker->dateTimeBetween('-1 year', 'now'),
-            'total_clicks'     => $this->faker->numberBetween(0, 5000),
             'user_agent'       => $agent->getUserAgent()
         ];
     }
