@@ -13,6 +13,5 @@ class MetricSeeder extends Seeder
     public function run(): void
     {
         Metric::factory()->count(500)->create();
-
     }
 }
