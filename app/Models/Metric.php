@@ -30,7 +30,6 @@ class Metric extends Model
         'operating_system',
         'referrer_source',
         'created_at',
-        'total_clicks',
         'user_agent'
     ];
 
