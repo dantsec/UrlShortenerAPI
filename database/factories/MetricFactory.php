@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Metric;
 use App\Models\Url;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Jenssegers\Agent\Agent;
 
 class MetricFactory extends Factory
 {
@@ -22,14 +23,18 @@ class MetricFactory extends Factory
      */
     public function definition()
     {
+        $agent = new Agent();
+        $agent->setUserAgent($this->faker->userAgent());
+
         return [
             'url_id'           => Url::inRandomOrder()->first()->id,
             'ip_addr'          => $this->faker->ipv4,
-            'device_type'      => $this->faker->randomElement(['mobile', 'desktop', 'tablet']),
-            'browser_type'     => $this->faker->randomElement(['Chrome', 'Firefox', 'Safari', 'Edge', 'Opera']),
-            'operating_system' => $this->faker->randomElement(['Windows', 'macOS', 'Linux', 'iOS', 'Android']),
-            'referrer_source'  => $this->faker->randomElement(['Google', 'Facebook', 'Twitter', 'LinkedIn', 'Direct']),
-            'created_at'       => $this->faker->dateTimeBetween('-1 year', 'now')
+            'device_type'      => $agent->deviceType(),
+            'browser_type'     => $agent->browser(),
+            'operating_system' => $agent->platform(),
+            'referrer_source'  => $this->faker->randomElement([$this->faker->url(), 'Direct']),
+            'created_at'       => $this->faker->dateTimeBetween('-1 year', 'now'),
+            'user_agent'       => $agent->getUserAgent()
         ];
     }
 }
