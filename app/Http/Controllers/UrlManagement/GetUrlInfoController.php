@@ -34,7 +34,7 @@ class GetUrlInfoController extends Controller
         return ResponseFormatter::formatResponse(
             'success',
             200,
-            null,
+            'Data Retrieved Successfully',
             [
                 'url_data' => $urlData,
                 'metrics' => $metrics

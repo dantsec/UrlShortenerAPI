@@ -30,9 +30,9 @@ class MetricDataHandler
         return [
             'url_id' => $urlId,
             'ip_addr' => $ipAddr,
-            'device_type' => $agent->deviceType(),
-            'browser_type' => $agent->browser(),
-            'operating_system' => $agent->platform(),
+            'device_type' => $agent->deviceType() ?: 'Unknown',
+            'browser_type' => $agent->browser() ?: 'Unknown',
+            'operating_system' => $agent->platform() ?: 'Unknown',
             'referrer_source' => $referrerSource,
             'created_at' => Carbon::now(),
             'user_agent' => $agent->getUserAgent()

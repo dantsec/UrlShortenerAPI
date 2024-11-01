@@ -39,7 +39,7 @@ class RedirectController extends Controller
         return ResponseFormatter::formatResponse(
             'success',
             302,
-            'Redirecting to the long URL',
+            'Redirecting to Long URL',
             ['redirect' => true],
             ['Location' => $longUrl]
         );
