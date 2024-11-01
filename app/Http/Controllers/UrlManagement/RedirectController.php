@@ -32,7 +32,7 @@ class RedirectController extends Controller
             );
         }
 
-        $data = MetricDataHandler::metricDataFormatter($url->id, $_SERVER);
+        $data = MetricDataHandler::metricDataFormatter($url->id, $_SERVER, $url->total_clicks);
 
         Metric::create($data);
 
