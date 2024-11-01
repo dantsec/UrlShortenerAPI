@@ -29,7 +29,9 @@ class Metric extends Model
         'browser_type',
         'operating_system',
         'referrer_source',
-        'created_at'
+        'created_at',
+        'total_clicks',
+        'user_agent'
     ];
 
     /**
