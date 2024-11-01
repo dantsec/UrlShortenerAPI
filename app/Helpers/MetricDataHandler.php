@@ -15,7 +15,7 @@ class MetricDataHandler
      *
      * @return array
      */
-    public static function metricDataFormatter(int $urlId, array $data): array
+    public static function metricDataFormatter(int $urlId, array $data, int $clicks): array
     {
         $agent = new Agent();
         $agent->setUserAgent($data['HTTP_USER_AGENT']);
@@ -33,7 +33,9 @@ class MetricDataHandler
             'browser_type' => $agent->browser(),
             'operating_system' => $agent->platform(),
             'referrer_source' => $referrerSource,
-            'created_at' => Carbon::now()
+            'created_at' => Carbon::now(),
+            'total_clicks' => $clicks,
+            'user_agent' => $agent->getUserAgent()
         ];
     }
 }
