@@ -17,11 +17,9 @@ class CreateUrlController extends Controller
     {
         // Try to validate request, else throw a expection and return a response with errors.
         try {
-            $this->validate($request, [
-                'long_url' => 'required|string'
-            ], [
-                'long_url.required' => 'URL is required.',
-                'long_url.string' => 'URL need to be a string.'
+            $this->validate($request, ['long_url' => 'required|string'], [
+                'long_url.required' => 'URL is Required.',
+                'long_url.string' => 'URL need to be a String.'
             ]);
         } catch (ValidationException $e) {
             return ResponseFormatter::formatResponse(
@@ -43,7 +41,7 @@ class CreateUrlController extends Controller
         return ResponseFormatter::formatResponse(
             'success',
             201,
-            null,
+            'URL Created Successfully',
             ['url' => env('APP_URL') . '/' . $hash]
         );
     }
