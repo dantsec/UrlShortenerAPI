@@ -23,11 +23,12 @@ $router->get('/{hash}', 'UrlManagement\RedirectController');
 /**
  * Group `/short`.
  *
- * Contains routes to create short url
- * And to get url info.
+ * Contains resource routes to manage URL's.
  */
 
 $router->group(['prefix' => 'short'], function () use ($router) {
     $router->post('/', 'UrlManagement\CreateUrlController');
     $router->get('/{hash}', 'UrlManagement\GetUrlInfoController');
+    $router->put('/{hash}', 'UrlManagement\UpdateUrlController');
+    $router->delete('/{hash}', 'UrlManagement\DeleteUrlController');
 });
