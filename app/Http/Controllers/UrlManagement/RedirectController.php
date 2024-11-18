@@ -11,6 +11,15 @@ use App\Models\Metric;
 
 class RedirectController extends Controller
 {
+    const VALIDATION_RULES = [
+        'hash' => 'required|string'
+    ];
+
+    const ERROR_MESSAGES = [
+        'hash.required' => 'Hash is Required.',
+        'hash.string' => 'Hash must be a String.'
+    ];
+
     /**
      * Redirect user to original url based on saved hash at database and save its metric.
      *
@@ -20,6 +29,12 @@ class RedirectController extends Controller
      */
     public function __invoke(string $hash): JsonResponse
     {
+        $validationResponse = $this->validateRequest(['hash' => $hash], self::VALIDATION_RULES, self::ERROR_MESSAGES);
+
+        if ($validationResponse) {
+            return $validationResponse;
+        }
+
         $url = Url::findByHash($hash);
 
         $longUrl = $url?->long_url;
