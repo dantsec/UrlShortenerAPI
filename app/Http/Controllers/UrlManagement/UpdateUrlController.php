@@ -7,10 +7,22 @@ use Illuminate\Http\JsonResponse;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 
 class UpdateUrlController extends Controller
 {
+    const VALIDATION_RULES = [
+        'long_url' => 'required|string|url',
+        'hash' =>  'required|string'
+    ];
+
+    const ERROR_MESSAGES = [
+        'long_url.required' => 'URL is Required.',
+        'long_url.string' => 'URL need to be a String.',
+        'long_url.url' => 'URL must be valid.',
+        'hash.required' => 'Hash is Required.',
+        'hash.string' => 'Hash must be a String.'
+    ];
+
     /**
      * Update URL and return it with updated data.
      *
@@ -21,19 +33,10 @@ class UpdateUrlController extends Controller
      */
     public function __invoke(string $hash, Request $request): JsonResponse
     {
-        // Try to validate request, else throw a expection and return a response with errors.
-        try {
-            $this->validate($request, ['long_url' => 'required|string'], [
-                'long_url.required' => 'URL is Required.',
-                'long_url.string' => 'URL need to be a String.'
-            ]);
-        } catch (ValidationException $e) {
-            return ResponseFormatter::formatResponse(
-                'error',
-                422,
-                'Validation Error',
-                $e->errors()
-            );
+        $validationResponse = $this->validateRequest($request->all() + ['hash' => $hash], self::VALIDATION_RULES, self::ERROR_MESSAGES);
+
+        if ($validationResponse) {
+            return $validationResponse;
         }
 
         $url = Url::findByHash($hash);

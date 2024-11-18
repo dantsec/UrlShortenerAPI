@@ -9,6 +9,15 @@ use App\Http\Controllers\Controller;
 
 class DeleteUrlController extends Controller
 {
+    const VALIDATION_RULES = [
+        'hash' => 'required|string'
+    ];
+
+    const ERROR_MESSAGES = [
+        'hash.required' => 'Hash is Required.',
+        'hash.string' => 'Hash must be a String.'
+    ];
+
     /**
      * Delete url and it's metrics completely.
      *
@@ -18,6 +27,12 @@ class DeleteUrlController extends Controller
      */
     public function __invoke(string $hash): JsonResponse
     {
+        $validationResponse = $this->validateRequest(['hash' => $hash], self::VALIDATION_RULES, self::ERROR_MESSAGES);
+
+        if ($validationResponse) {
+            return $validationResponse;
+        }
+
         $url = Url::findByHash($hash);
 
         if (!isset($url)) {

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class Url extends Model
 {
@@ -37,6 +38,20 @@ class Url extends Model
     public static function findByHash(?string $hash): ?self
     {
         return self::where('hash', $hash)->first();
+    }
+
+    /**
+     * Returns a 10-character hash that has not yet been registered in the database.
+     *
+     * @return string
+     */
+    public static function generateUniqueHash(): string
+    {
+        do {
+            $hash = Str::random(10);
+        } while (Url::where('hash', $hash)->exists());
+
+        return $hash;
     }
 
     /**

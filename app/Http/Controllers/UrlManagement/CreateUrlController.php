@@ -3,34 +3,33 @@
 namespace App\Http\Controllers\UrlManagement;
 
 use App\Models\Url;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\JsonResponse;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
-use Illuminate\Validation\ValidationException;
 
 class CreateUrlController extends Controller
 {
+    const VALIDATION_RULES = [
+        'long_url' => 'required|string|url'
+    ];
+
+    const ERROR_MESSAGES = [
+        'long_url.required' => 'URL is Required.',
+        'long_url.string' => 'URL need to be a String.',
+        'long_url.url' => 'URL must be valid.'
+    ];
+
     public function __invoke(Request $request): JsonResponse
     {
-        // Try to validate request, else throw a expection and return a response with errors.
-        try {
-            $this->validate($request, ['long_url' => 'required|string'], [
-                'long_url.required' => 'URL is Required.',
-                'long_url.string' => 'URL need to be a String.'
-            ]);
-        } catch (ValidationException $e) {
-            return ResponseFormatter::formatResponse(
-                'error',
-                422,
-                'Validation Error',
-                $e->errors()
-            );
+        $validationResponse = $this->validateRequest($request->all(), self::VALIDATION_RULES, self::ERROR_MESSAGES);
+
+        if ($validationResponse) {
+            return $validationResponse;
         }
 
-        $hash = Str::random(10);
+        $hash = Url::generateUniqueHash();
 
         Url::create([
             'hash' => $hash,
