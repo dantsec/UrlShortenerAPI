@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Url;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 class UrlFactory extends Factory
@@ -26,8 +25,8 @@ class UrlFactory extends Factory
         return [
             'hash'         => Str::random(10),
             'long_url'     => $this->faker->url(),
-            'created_at'   => Carbon::now(),
             'total_clicks' => $this->faker->numberBetween(0, 5000),
+            'expired_at'   => $this->faker->randomElement([$this->faker->dateTime(), null])
         ];
     }
 }

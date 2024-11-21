@@ -71,13 +71,14 @@ php -S localhost:9000 -t public/
 
 - Priority (**1**)
     - [ ] Testes Unitarios;
-    - [ ] Modularizar (igual na `scaff`);
+    - [ ] Modularizar (igual na `scaff`)?
     - [ ] Melhorar tratamento de erros e responses;
     - [ ] Documentacao (Swagger).
 - Priority (**2**)
     - [ ] Sistema de Logs;
-    - [ ] Tempo de Expiracao;
-    - [ ] Adicionar Paginacao & Filtragem.
+    - [ ] Adicionar Paginacao & Filtragem;
+    - [ ] Transformar Helpers em traits?
+    - [ ] Middleware para `isExpired`?
 
 ## Contributing 🛠️
 

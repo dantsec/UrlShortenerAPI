@@ -9,11 +9,11 @@ use App\Http\Controllers\Controller;
 
 class GetUrlInfoController extends Controller
 {
-    const VALIDATION_RULES = [
+    private const VALIDATION_RULES = [
         'hash' => 'required|string'
     ];
 
-    const ERROR_MESSAGES = [
+    private const ERROR_MESSAGES = [
         'hash.required' => 'Hash is Required.',
         'hash.string' => 'Hash must be a String.'
     ];
@@ -45,6 +45,12 @@ class GetUrlInfoController extends Controller
 
         $urlData = $url->toArray();
         $metrics = $url->metrics->toArray();
+
+        $metrics = array_map(function ($metric) {
+            unset($metric['id']);
+
+            return $metric;
+        }, $metrics);
 
         return ResponseFormatter::formatResponse(
             'success',
