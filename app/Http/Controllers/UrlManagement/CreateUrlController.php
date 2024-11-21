@@ -10,11 +10,11 @@ use App\Http\Controllers\Controller;
 
 class CreateUrlController extends Controller
 {
-    const VALIDATION_RULES = [
+    private const VALIDATION_RULES = [
         'long_url' => 'required|string|url'
     ];
 
-    const ERROR_MESSAGES = [
+    private const ERROR_MESSAGES = [
         'long_url.required' => 'URL is Required.',
         'long_url.string' => 'URL need to be a String.',
         'long_url.url' => 'URL must be valid.'

@@ -10,12 +10,12 @@ use Illuminate\Http\Request;
 
 class UpdateUrlController extends Controller
 {
-    const VALIDATION_RULES = [
+    private const VALIDATION_RULES = [
         'long_url' => 'required|string|url',
         'hash' =>  'required|string'
     ];
 
-    const ERROR_MESSAGES = [
+    private const ERROR_MESSAGES = [
         'long_url.required' => 'URL is Required.',
         'long_url.string' => 'URL need to be a String.',
         'long_url.url' => 'URL must be valid.',
@@ -33,7 +33,11 @@ class UpdateUrlController extends Controller
      */
     public function __invoke(string $hash, Request $request): JsonResponse
     {
-        $validationResponse = $this->validateRequest($request->all() + ['hash' => $hash], self::VALIDATION_RULES, self::ERROR_MESSAGES);
+        $validationResponse = $this->validateRequest(
+            $request->all() + ['hash' => $hash],
+            self::VALIDATION_RULES,
+            self::ERROR_MESSAGES
+        );
 
         if ($validationResponse) {
             return $validationResponse;

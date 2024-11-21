@@ -11,11 +11,11 @@ use App\Models\Metric;
 
 class RedirectController extends Controller
 {
-    const VALIDATION_RULES = [
+    private const VALIDATION_RULES = [
         'hash' => 'required|string'
     ];
 
-    const ERROR_MESSAGES = [
+    private const ERROR_MESSAGES = [
         'hash.required' => 'Hash is Required.',
         'hash.string' => 'Hash must be a String.'
     ];
