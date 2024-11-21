@@ -49,6 +49,14 @@ class UpdateUrlController extends Controller
             );
         }
 
+        if ($url->isExpired()) {
+            return ResponseFormatter::formatResponse(
+                'error',
+                410,
+                'URL Expired',
+            );
+        }
+
         $url->update(['long_url' => $request->long_url]);
 
         return ResponseFormatter::formatResponse(

@@ -46,6 +46,11 @@ class GetUrlInfoController extends Controller
         $urlData = $url->toArray();
         $metrics = $url->metrics->toArray();
 
+        $metrics = array_map(function($metric) {
+            unset($metric['id']);
+            return $metric;
+        }, $metrics);
+
         return ResponseFormatter::formatResponse(
             'success',
             200,

@@ -47,6 +47,14 @@ class RedirectController extends Controller
             );
         }
 
+        if ($url->isExpired()) {
+            return ResponseFormatter::formatResponse(
+                'error',
+                410,
+                'URL Expired',
+            );
+        }
+
         $url->increment('total_clicks');
 
         Metric::create(MetricDataHandler::metricDataFormatter($url->id, $_SERVER, $url->total_clicks));

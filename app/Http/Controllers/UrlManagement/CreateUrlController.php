@@ -4,7 +4,6 @@ namespace App\Http\Controllers\UrlManagement;
 
 use App\Models\Url;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
 use Illuminate\Http\JsonResponse;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
@@ -33,8 +32,7 @@ class CreateUrlController extends Controller
 
         Url::create([
             'hash' => $hash,
-            'long_url' => $request->long_url,
-            'created_at' => Carbon::now()
+            'long_url' => $request->long_url
         ]);
 
         return ResponseFormatter::formatResponse(
