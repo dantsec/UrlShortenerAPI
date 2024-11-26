@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class UpdateUrlController extends Controller
 {
@@ -62,6 +63,11 @@ class UpdateUrlController extends Controller
         }
 
         $url->update(['long_url' => $request->long_url]);
+
+        Log::info('(URL): URL updated successfully.', [
+            'hash' => $hash,
+            'updated_url' => $request->long_url
+        ]);
 
         return ResponseFormatter::formatResponse(
             'success',

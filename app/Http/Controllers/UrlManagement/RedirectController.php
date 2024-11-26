@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\Models\Metric;
+use Illuminate\Support\Facades\Log;
 
 class RedirectController extends Controller
 {
@@ -57,7 +58,14 @@ class RedirectController extends Controller
 
         $url->increment('total_clicks');
 
+        Log::info('(URL): URL click count incremented.', [
+            'hash' => $hash,
+            'total_clicks' => $url->total_clicks
+        ]);
+
         Metric::create(MetricDataHandler::metricDataFormatter($url->id, $_SERVER, $url->total_clicks));
+
+        Log::info('(METRIC): Metric data recorded.', ['hash' => $hash]);
 
         return ResponseFormatter::formatResponse(
             'success',

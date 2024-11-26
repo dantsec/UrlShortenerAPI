@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 class CreateUrlController extends Controller
 {
@@ -31,6 +32,11 @@ class CreateUrlController extends Controller
         $hash = Url::generateUniqueHash();
 
         Url::create([
+            'hash' => $hash,
+            'long_url' => $request->long_url
+        ]);
+
+        Log::info('(URL): URL created successfully.', [
             'hash' => $hash,
             'long_url' => $request->long_url
         ]);
