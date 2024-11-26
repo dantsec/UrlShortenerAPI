@@ -6,6 +6,7 @@ use App\Models\Url;
 use Illuminate\Http\JsonResponse;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 class DeleteUrlController extends Controller
 {
@@ -44,6 +45,8 @@ class DeleteUrlController extends Controller
         }
 
         $url->deleteOrFail();
+
+        Log::info('(URL): URL deleted successfully.', ['hash' => $hash]);
 
         return ResponseFormatter::formatResponse(
             'success',

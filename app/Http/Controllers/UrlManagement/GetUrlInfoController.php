@@ -6,6 +6,7 @@ use App\Models\Url;
 use Illuminate\Http\JsonResponse;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Log;
 
 class GetUrlInfoController extends Controller
 {
@@ -51,6 +52,11 @@ class GetUrlInfoController extends Controller
 
             return $metric;
         }, $metrics);
+
+        Log::info('(URL): URL info retrieved successfully.', [
+            'hash' => $hash,
+            'url_data' => $urlData
+        ]);
 
         return ResponseFormatter::formatResponse(
             'success',
