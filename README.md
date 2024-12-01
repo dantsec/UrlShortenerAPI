@@ -47,25 +47,32 @@ git clone https://github.com/yourusername/UrlShortenerAPI.git
 cd UrlShortenerAPI/
 ```
 
-2. **Install dependencies**:
-
-```bash
-composer install
-```
-
-3. **Create and edit your .env**:
+2. **Create and edit your .env**:
 
 ```bash
 cp .env.example .env && vi .env
 ```
 
-4. **Run the server**:
-    - The server will start on `http://localhost:9000`;
-    - You can now access and use the API to shorten URLs and retrieve information.
+3. Executing:
+    - In both, the server will start on `http://localhost:8080`;
 
-```bash
-php -S localhost:9000 -t public/
-```
+    > 3.1. **Locally**:
+
+    ```bash
+    composer install
+    php -S localhost:8080 -t public/
+    ```
+
+    > 3.2. **With Docker**:
+
+    ```bash
+    # Build
+    docker compose up --build -d
+
+    # Migrations
+    # Obs.: You can use `migrate:seed` to populate your db
+    docker compose exec web php artisan migrate
+    ```
 
 ## Todo List 📌
 
@@ -75,7 +82,6 @@ php -S localhost:9000 -t public/
     - [ ] Melhorar tratamento de erros e responses;
     - [ ] Documentacao (Swagger).
 - Priority (**2**)
-    - [ ] Sistema de Logs;
     - [ ] Adicionar Paginacao & Filtragem;
     - [ ] Transformar Helpers em traits?
     - [ ] Middleware para `isExpired`?
