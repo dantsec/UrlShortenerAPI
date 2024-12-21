@@ -1,22 +1,31 @@
-FROM php:8.3-cli
-
-RUN apt-get update && apt-get install -y \
-    git \
-    libssl-dev libonig-dev libpq-dev \
-    && docker-php-ext-install -j$(nproc) \
-        pdo pdo_mysql \
-        mbstring \
-        opcache
-
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+FROM php:8.3-fpm-alpine
 
 WORKDIR /app
 
+RUN apk update && apk add build-base
+
+RUN apk add \
+    oniguruma-dev \
+    zlib-dev git zip \
+    openssl-dev \
+    libpq-dev libzip-dev
+
+RUN docker-php-ext-configure zip
+
+RUN docker-php-ext-install -j$(nproc) \
+    pdo pdo_mysql mbstring opcache zip
+
+RUN curl -sS https://getcomposer.org/installer | php \
+        && mv composer.phar /usr/local/bin/ \
+        && ln -s /usr/local/bin/composer.phar /usr/local/bin/composer
+
 COPY . /app
 
-RUN composer update \
-    && composer install --optimize-autoloader \
-    && composer dump-autoload
+RUN composer install --prefer-source --no-interaction
+
+RUN composer dump-autoload
+
+ENV PATH="~/.composer/vendor/bin:./vendor/bin:${PATH}"
 
 EXPOSE 8080
 
