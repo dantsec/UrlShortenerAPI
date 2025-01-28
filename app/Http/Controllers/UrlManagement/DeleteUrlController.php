@@ -2,15 +2,13 @@
 
 namespace App\Http\Controllers\UrlManagement;
 
-use App\Helpers\MetricDataHandler;
 use App\Models\Url;
 use Illuminate\Http\JsonResponse;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
-use App\Models\Metric;
 use Illuminate\Support\Facades\Log;
 
-class RedirectController extends Controller
+class DeleteUrlController extends Controller
 {
     private const VALIDATION_RULES = [
         'hash' => 'required|string'
@@ -22,7 +20,7 @@ class RedirectController extends Controller
     ];
 
     /**
-     * Redirect user to original url based on saved hash at database and save its metric.
+     * Delete url and it's metrics completely.
      *
      * @param string $hash
      *
@@ -38,9 +36,7 @@ class RedirectController extends Controller
 
         $url = Url::findByHash($hash);
 
-        $longUrl = $url?->long_url;
-
-        if (!isset($longUrl)) {
+        if (!isset($url)) {
             return ResponseFormatter::formatResponse(
                 'error',
                 404,
@@ -48,31 +44,14 @@ class RedirectController extends Controller
             );
         }
 
-        if ($url->isExpired()) {
-            return ResponseFormatter::formatResponse(
-                'error',
-                410,
-                'URL Expired',
-            );
-        }
+        $url->deleteOrFail();
 
-        $url->increment('total_clicks');
-
-        Log::info('(URL): URL click count incremented.', [
-            'hash' => $hash,
-            'total_clicks' => $url->total_clicks
-        ]);
-
-        Metric::create(MetricDataHandler::metricDataFormatter($url->id, $_SERVER, $url->total_clicks));
-
-        Log::info('(METRIC): Metric data recorded.', ['hash' => $hash]);
+        Log::info('(URL): URL deleted successfully.', ['hash' => $hash]);
 
         return ResponseFormatter::formatResponse(
             'success',
-            302,
-            'Redirecting to Long URL',
-            ['redirect' => true],
-            ['Location' => $longUrl]
+            200,
+            'Data Deleted Successfully'
         );
     }
 }

@@ -2,35 +2,43 @@
 
 namespace App\Http\Controllers\UrlManagement;
 
-use App\Helpers\MetricDataHandler;
 use App\Models\Url;
 use Illuminate\Http\JsonResponse;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
-use App\Models\Metric;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class RedirectController extends Controller
+class UpdateUrlController extends Controller
 {
     private const VALIDATION_RULES = [
-        'hash' => 'required|string'
+        'long_url' => 'required|string|url',
+        'hash' =>  'required|string'
     ];
 
     private const ERROR_MESSAGES = [
+        'long_url.required' => 'URL is Required.',
+        'long_url.string' => 'URL need to be a String.',
+        'long_url.url' => 'URL must be valid.',
         'hash.required' => 'Hash is Required.',
         'hash.string' => 'Hash must be a String.'
     ];
 
     /**
-     * Redirect user to original url based on saved hash at database and save its metric.
+     * Update URL and return it with updated data.
      *
      * @param string $hash
+     * @param Request $request
      *
      * @return JsonResponse
      */
-    public function __invoke(string $hash): JsonResponse
+    public function __invoke(string $hash, Request $request): JsonResponse
     {
-        $validationResponse = $this->validateRequest(['hash' => $hash], self::VALIDATION_RULES, self::ERROR_MESSAGES);
+        $validationResponse = $this->validateRequest(
+            $request->all() + ['hash' => $hash],
+            self::VALIDATION_RULES,
+            self::ERROR_MESSAGES
+        );
 
         if ($validationResponse) {
             return $validationResponse;
@@ -38,9 +46,7 @@ class RedirectController extends Controller
 
         $url = Url::findByHash($hash);
 
-        $longUrl = $url?->long_url;
-
-        if (!isset($longUrl)) {
+        if (!isset($url)) {
             return ResponseFormatter::formatResponse(
                 'error',
                 404,
@@ -56,23 +62,18 @@ class RedirectController extends Controller
             );
         }
 
-        $url->increment('total_clicks');
+        $url->update(['long_url' => $request->long_url]);
 
-        Log::info('(URL): URL click count incremented.', [
+        Log::info('(URL): URL updated successfully.', [
             'hash' => $hash,
-            'total_clicks' => $url->total_clicks
+            'updated_url' => $request->long_url
         ]);
-
-        Metric::create(MetricDataHandler::metricDataFormatter($url->id, $_SERVER, $url->total_clicks));
-
-        Log::info('(METRIC): Metric data recorded.', ['hash' => $hash]);
 
         return ResponseFormatter::formatResponse(
             'success',
-            302,
-            'Redirecting to Long URL',
-            ['redirect' => true],
-            ['Location' => $longUrl]
+            200,
+            'URL Updated Successfully',
+            [$url->toArray()]
         );
     }
 }

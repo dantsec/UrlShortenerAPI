@@ -1,26 +1,104 @@
-# Lumen PHP Framework
+<div align="center">
+    <img src="https://i.imgur.com/WEPSHWd.png">
+</div>
 
-[![Build Status](https://travis-ci.org/laravel/lumen-framework.svg)](https://travis-ci.org/laravel/lumen-framework)
-[![Total Downloads](https://img.shields.io/packagist/dt/laravel/lumen-framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![Latest Stable Version](https://img.shields.io/packagist/v/laravel/lumen-framework)](https://packagist.org/packages/laravel/lumen-framework)
-[![License](https://img.shields.io/packagist/l/laravel/lumen)](https://packagist.org/packages/laravel/lumen-framework)
+<p align="center">
+    <img src="https://img.shields.io/github/license/dantsec/UrlShortenerAPI?color=black&logo=github&logoColor=white&style=for-the-badge">
+    <img src="https://img.shields.io/github/issues/dantsec/UrlShortenerAPI?color=black&logo=github&logoColor=white&style=for-the-badge">
+    <img src="https://img.shields.io/github/stars/dantsec/UrlShortenerAPI?color=black&label=STARS&logo=github&logoColor=white&style=for-the-badge">
+    <img src="https://img.shields.io/github/forks/dantsec/UrlShortenerAPI?color=black&logo=github&logoColor=white&style=for-the-badge">
+    <img src="https://img.shields.io/github/languages/code-size/dantsec/UrlShortenerAPI?color=black&logo=github&logoColor=white&style=for-the-badge">
+</p>
 
-Laravel Lumen is a stunningly fast PHP micro-framework for building web applications with expressive, elegant syntax. We believe development must be an enjoyable, creative experience to be truly fulfilling. Lumen attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as routing, database abstraction, queueing, and caching.
+<h1 align="center">
+    Url Shortener API 🚀
+</h1>
 
-> **Note:** In the years since releasing Lumen, PHP has made a variety of wonderful performance improvements. For this reason, along with the availability of [Laravel Octane](https://laravel.com/docs/octane), we no longer recommend that you begin new projects with Lumen. Instead, we recommend always beginning new projects with [Laravel](https://laravel.com).
+> **UrlShortenerAPI** is a project built to efficiently convert long URLs into shorter, easy-to-share links. It offers a reliable redirection service, allowing users to shorten URLs and retrieve detailed information about each shortened link. Key features include a simple API interface for creating and managing shortened URLs, flexible configuration options, and the ability to track shortened URL details. This API is ideal for applications that need to manage and share links while saving space and providing clean URLs.
 
-## Official Documentation
+## Authors 👥
 
-Documentation for the framework can be found on the [Lumen website](https://lumen.laravel.com/docs).
+- For more information see my blog and my contributions to community.
+    - [**dantsec**](https://www.github.com/dantsec)
 
-## Contributing
+## Tech Stack 🧑‍💻
 
-Thank you for considering contributing to Lumen! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- This project was developed with the following technologies:
+    - [**PHP**](https://www.php.net/) (Main Language)
+    - [**Lumen**](https://lumen.laravel.com/) (Micro-Framework)
+    - [**Composer**](https://getcomposer.org/) (Dependency Management)
 
-## Security Vulnerabilities
+## Documents 📂
 
-If you discover a security vulnerability within Lumen, please send an e-mail to Taylor Otwell at taylor@laravel.com. All security vulnerabilities will be promptly addressed.
+- [**License**](./LICENSE)
+- [**Draw**](./docs/url-shortener-api.excalidraw)
 
-## License
+## Installation / Run Locally ⚙️
 
-The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- **Important**: Ensure you have [**Composer**](https://getcomposer.org/) installed.
+
+### Steps
+
+1. **Clone the repository** and navigate into the project directory:
+
+```bash
+git clone https://github.com/yourusername/UrlShortenerAPI.git
+
+cd UrlShortenerAPI/
+```
+
+2. **Create and edit your .env**:
+
+```bash
+cp .env.example .env && vi .env
+```
+
+3. Executing:
+    - In both, the server will start on `http://localhost:8080`;
+
+    > 3.1. **Locally**:
+
+    ```bash
+    composer install
+    php -S localhost:8080 -t public/
+    ```
+
+    > 3.2. **With Docker**:
+
+    ```bash
+    # Build
+    docker compose up --build -d
+
+    # Migrations
+    # Obs.: You can use `migrate:seed` to populate your db
+    docker compose exec web php artisan migrate
+    ```
+
+## Todo List 📌
+
+- Priority (**1**)
+    - [ ] Testes Unitarios;
+    - [ ] Modularizar (igual na `scaff`)?
+    - [ ] Melhorar tratamento de erros e responses;
+    - [ ] Documentacao (Swagger).
+- Priority (**2**)
+    - [ ] Adicionar Paginacao & Filtragem;
+    - [ ] Transformar Helpers em traits?
+    - [ ] Middleware para `isExpired`?
+- Priority (**3**)
+    - [ ] Use ngingx instead of php built-in server.
+
+## Contributing 🛠️
+
+```bash
+# Create a fork from the original repository and clone it.
+git clone https://github.com/dantsec/UrlShortenerAPI.git
+# Enter into the project folder.
+cd UrlShortenerAPI/
+# Create a new branch with the name feat-[BRANCH_NAME].
+git checkout -b feat/[BRANCH_NAME]
+# Make your changes and commit them.
+git add . && git commit -m "YOUR_COMMIT_MESSAGE"
+# Push your branch and open a pull request.
+git push origin feat/[BRANCH_NAME]
+```
