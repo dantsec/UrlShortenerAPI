@@ -60,6 +60,11 @@ cp .env.example .env && vi .env
 
     ```bash
     composer install
+
+    # Migrations
+    # Obs.: You can use `migrate --seed` to populate your db
+    php artisan migrate
+
     php -S localhost:8080 -t public/
     ```
 
@@ -70,7 +75,7 @@ cp .env.example .env && vi .env
     docker compose up --build -d
 
     # Migrations
-    # Obs.: You can use `migrate:seed` to populate your db
+    # Obs.: You can use `migrate --seed` to populate your db
     docker compose exec web php artisan migrate
     ```
 
@@ -79,10 +84,10 @@ cp .env.example .env && vi .env
 - Priority (**1**)
     - [ ] Testes Unitarios;
     - [ ] Modularizar (igual na `scaff`)?
-    - [ ] Melhorar tratamento de erros e responses;
+    - [x] Melhorar tratamento de erros e responses;
     - [ ] Documentacao (Swagger).
 - Priority (**2**)
-    - [ ] Adicionar Paginacao & Filtragem;
+    - [x] Adicionar Paginacao & Filtragem;
     - [ ] Transformar Helpers em traits?
     - [ ] Middleware para `isExpired`?
 - Priority (**3**)
