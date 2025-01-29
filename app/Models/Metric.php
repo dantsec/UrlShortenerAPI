@@ -33,6 +33,10 @@ class Metric extends Model
         'user_agent'
     ];
 
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d H:i:s'
+    ];
+
     /**
      * Relationship (1...N) with `urls` table.
      *

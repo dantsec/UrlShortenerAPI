@@ -21,7 +21,7 @@ trait RequestHandlerTrait
      *
      * @throws ValidationException
      */
-    public function validateRequest(array $data, array $rules, array $messages): ?JsonResponse
+    public function validateRequest(array $data, array $rules, array $messages): JsonResponse|array
     {
         $validator = Validator::make($data, $rules, $messages);
 
@@ -34,6 +34,6 @@ trait RequestHandlerTrait
             );
         }
 
-        return null;
+        return $validator->validate();
     }
 }

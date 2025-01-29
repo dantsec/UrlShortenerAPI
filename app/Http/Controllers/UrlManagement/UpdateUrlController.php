@@ -40,7 +40,7 @@ class UpdateUrlController extends Controller
             self::ERROR_MESSAGES
         );
 
-        if ($validationResponse) {
+        if ($validationResponse instanceof JsonResponse) {
             return $validationResponse;
         }
 
