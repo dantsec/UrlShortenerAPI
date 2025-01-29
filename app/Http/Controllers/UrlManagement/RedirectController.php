@@ -32,7 +32,7 @@ class RedirectController extends Controller
     {
         $validationResponse = $this->validateRequest(['hash' => $hash], self::VALIDATION_RULES, self::ERROR_MESSAGES);
 
-        if ($validationResponse) {
+        if ($validationResponse instanceof JsonResponse) {
             return $validationResponse;
         }
 

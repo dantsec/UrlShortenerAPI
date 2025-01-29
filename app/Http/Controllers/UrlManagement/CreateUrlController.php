@@ -25,7 +25,7 @@ class CreateUrlController extends Controller
     {
         $validationResponse = $this->validateRequest($request->all(), self::VALIDATION_RULES, self::ERROR_MESSAGES);
 
-        if ($validationResponse) {
+        if ($validationResponse instanceof JsonResponse) {
             return $validationResponse;
         }
 
