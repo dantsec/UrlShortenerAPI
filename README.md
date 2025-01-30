@@ -86,6 +86,7 @@ cp .env.example .env && vi .env
     - [ ] Transformar Helpers em traits?
     - [ ] Middleware para `isExpired`?
     - [ ] Ao inves de utilizar `makeHidden`, usar API Resource.
+    - [ ] Fazer com que o filtro `sort_by` e `order` virem um so no modelo `sort=field:order,field:order,...`
 - Priority (**3**)
     - [ ] Use ngingx instead of php built-in server.
 
