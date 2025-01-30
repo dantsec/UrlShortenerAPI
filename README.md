@@ -85,6 +85,7 @@ cp .env.example .env && vi .env
     - [ ] Adicionar Paginacao & Filtragem;
     - [ ] Transformar Helpers em traits?
     - [ ] Middleware para `isExpired`?
+    - [ ] Ao inves de utilizar `makeHidden`, usar API Resource.
 - Priority (**3**)
     - [ ] Use ngingx instead of php built-in server.
 
